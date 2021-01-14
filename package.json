@@ -1,0 +1,25 @@
+{
+  "name": "tlc-front-components",
+  "version": "1.0.1",
+  "description": "data table vuetify CRUD ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vuetify",
+    "vue",
+    "crud-table",
+    "infocard"
+  ],
+  "author": "Oleg Kravchuck",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-plugin-vue": "^7.4.1"
+  }
+}
