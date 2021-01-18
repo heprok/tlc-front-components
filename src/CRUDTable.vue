@@ -277,14 +277,13 @@ export default {
   methods: {
     selectUrl(url) {
       let items = [];
-      Axios.get(this.entryPointApi + url)
-      .then(function (response) {
+      Axios.get(this.entryPointApi + url).then(function (response) {
         this.selectModel = response.data["hydra:member"].map(function (item) {
-          return item.name
+          return item.name;
         });
-      console.log(items)
-      return items;
-      })
+        console.log(items);
+        return items;
+      });
     },
     async update() {
       this.loading = true;
@@ -301,24 +300,21 @@ export default {
       this.dialogAdded = true;
     },
 
-    async deleteItemAction(item) {
-      if (this.checkPassword()) {
-        this.loadingBtn = true;
-        await this.deleteItem();
-        await this.updatePeople();
-        this.loadingBtn = false;
-        this.people.editedIndex = -1;
-        this.people.editedItem = {};
-        this.closeDeleteDialog();
-      }
+    deleteItemAction(item) {
+      this.loadingBtn = false;
+      this.editedIndex = this.items.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
     },
 
     async deleteItemConfirm() {
-      this.loadingBtn = true;
-      await this.deleteItem();
-      await this.update();
-      this.loadingBtn = false;
-      this.closeDeleteDialog();
+      if (this.checkPassword()) {
+        this.loadingBtn = true;
+        await this.deleteItem();
+        await this.update();
+        this.loadingBtn = false;
+        this.closeDeleteDialog();
+      }
     },
 
     closeAddedDialog() {
