@@ -301,11 +301,16 @@ export default {
       this.dialogAdded = true;
     },
 
-    deleteItemAction(item) {
-      this.loadingBtn = false;
-      this.editedIndex = this.items.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
+    async deleteItemAction(item) {
+      if (this.checkPassword()) {
+        this.loadingBtn = true;
+        await this.deleteItem();
+        await this.updatePeople();
+        this.loadingBtn = false;
+        this.people.editedIndex = -1;
+        this.people.editedItem = {};
+        this.closeDeleteDialog();
+      }
     },
 
     async deleteItemConfirm() {
