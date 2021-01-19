@@ -46,7 +46,7 @@
   import BaseMaterialCard from './MaterialCard'
   export default {
     name: 'MaterialStatsCard',
-    compontens: { BaseMaterialCard },
+    compontens: { BaseMaterialCard,  Card },
 
     inheritAttrs: false,
 

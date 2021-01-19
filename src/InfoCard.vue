@@ -2,12 +2,11 @@
   <base-material-stats-card
     :loading="loading"
     v-bind="$attrs"
-    v-on="$listeners"
-    :smallValue="value"
+    :small-value="value"
     :sub-text="subtitle"
     :color="color"
-  >
-  </base-material-stats-card>
+    v-on="$listeners"
+  />
 </template>
 
 <script>
@@ -17,6 +16,12 @@ import BaseMaterialStatsCard from './componets/MaterialStatsCard'
 export default {
   name: "InfoCard",
   components: {BaseMaterialStatsCard},
+  props: {
+    urlApi: {
+      type: String,
+      require: true,
+    },
+  },
   data() {
     return {
       value: "",
@@ -26,14 +31,8 @@ export default {
       color: '',
     };
   },
-  watch: {},
   computed: {},
-  props: {
-    urlApi: {
-      type: String,
-      require: true,
-    },
-  },
+  watch: {},
   mounted() {
     this.update();
   },

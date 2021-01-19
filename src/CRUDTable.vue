@@ -13,10 +13,10 @@
       loading-text="Загрузка... Ждите"
       :items="items"
       v-bind="$attrs"
-      v-on="$listeners"
       class="elevation-1"
+      v-on="$listeners"
     >
-      <template v-slot:top>
+      <template #top>
         <v-toolbar flat>
           <v-toolbar-title>
             <v-row>
@@ -38,7 +38,10 @@
                     persistent
                     width="500"
                   >
-                    <base-material-card icon="mdi-key" title="Потвердите права">
+                    <base-material-card
+                      icon="mdi-key"
+                      title="Потвердите права"
+                    >
                       <v-card-title />
                       <v-card-text>
                         <v-row align-content="center">
@@ -74,9 +77,16 @@
                       </v-card-actions>
                     </base-material-card>
                   </v-dialog>
-                  <v-divider class="mx-1" inset vertical />
-                  <v-dialog v-model="dialogAdded" max-width="700px">
-                    <template v-slot:activator="{ on, attrs }">
+                  <v-divider
+                    class="mx-1"
+                    inset
+                    vertical
+                  />
+                  <v-dialog
+                    v-model="dialogAdded"
+                    max-width="700px"
+                  >
+                    <template #activator="{ on, attrs }">
                       <v-btn
                         color="primary"
                         large
@@ -116,8 +126,7 @@
                                   attach
                                   chips
                                   multiple
-                                >
-                                </v-select>
+                                />
                               </div>
                             </v-col>
                           </v-row>
@@ -144,7 +153,10 @@
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
-                  <v-dialog v-model="dialogDelete" max-width="500px">
+                  <v-dialog
+                    v-model="dialogDelete"
+                    max-width="500px"
+                  >
                     <v-card>
                       <v-card-title class="headline">
                         Вы уверены, что хотите удалить?
@@ -187,20 +199,40 @@
         </v-toolbar>
       </template>
       <!-- CHECKBOX для boolean for fir and enabled -->
-      <template v-slot:[`item.fir`]="{ item }">
-        <v-simple-checkbox v-model="item.fir" disabled />
+      <template #[`item.fir`]="{ item }">
+        <v-simple-checkbox
+          v-model="item.fir"
+          disabled
+        />
       </template>
-      <template v-slot:[`item.enabled`]="{ item }">
-        <v-simple-checkbox v-model="item.enabled" disabled />
+      <template #[`item.enabled`]="{ item }">
+        <v-simple-checkbox
+          v-model="item.enabled"
+          disabled
+        />
       </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItemAction(item)">
+      <template #[`item.actions`]="{ item }">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItemAction(item)"
+        >
           mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItemAction(item)"> mdi-delete </v-icon>
+        <v-icon
+          small
+          @click="deleteItemAction(item)"
+        >
+          mdi-delete
+        </v-icon>
       </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="update"> Обновить </v-btn>
+      <template #no-data>
+        <v-btn
+          color="primary"
+          @click="update"
+        >
+          Обновить
+        </v-btn>
       </template>
     </v-data-table>
   </base-material-card>

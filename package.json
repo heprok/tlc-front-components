@@ -1,10 +1,28 @@
 {
   "name": "tlc-front-components",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "data table vuetify CRUD ",
-  "main": "index.js",
+  "author": "Oleg Kravchuck",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "crypto": "^1.0.1",
+    "vue": "^2.6.12",
+    "core-js": "^3.8.2"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.18.0",
+    "eslint-plugin-vue": "^7.4.1",
+    "regenerator-runtime": "^0.13.7",
+    "sass": "^1.19.0",
+    "sass-loader": "^8.0.0",
+    "vue-cli-plugin-vuetify": "~2.0.9",
+    "vuetify": "^2.4.2",
+    "vuetify-loader": "^1.3.0"
   },
   "keywords": [
     "vuetify",
@@ -12,17 +30,5 @@
     "crud-table",
     "infocard"
   ],
-  "author": "Oleg Kravchuck",
-  "license": "MIT",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "babel": "^6.23.0",
-    "babel-loader": "^8.2.2",
-    "core-js": "^3.8.2",
-    "crypto": "^1.0.1",
-    "regenerator-runtime": "^0.13.7",
-    "vue": "^2.6.12",
-    "vuetify": "^2.4.2"
-  },
-  "devDependencies": {}
+  "license": "MIT"
 }
