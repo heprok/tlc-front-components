@@ -268,6 +268,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isCheckPass: {
+      type: Boolean,
+      default: false
+    },
     query: {
       type: Object,
       default: () => {}
@@ -359,6 +363,7 @@ export default {
     },
     closeDialogCheckPassword() {
       this.dialogCheckPassword = false;
+      this.loadingBtn = false;
       this.password = "";
     },
     confirmDialogCheckPassword() {
@@ -380,16 +385,22 @@ export default {
       this.dialogDelete = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
+        this.loadingBtn = false;
         this.editedIndex = -1;
       });
     },
 
     async deleteItem() {
-      const request = await Axios.delete(this.editedItem["@id"]);
+      const request = await Axios.delete(
+        this.entryPointApi + this.editedItem["@id"]
+      );
       return request;
     },
     async editItem() {
-      const request = await Axios.put(this.editedItem["@id"], this.editedItem);
+      const request = await Axios.put(
+        this.entryPointApi + this.editedItem["@id"],
+        this.editedItem
+      );
       return request;
     },
     async updateItems() {
@@ -402,12 +413,15 @@ export default {
       return request;
     },
     async addItem() {
-      const request = await Axios.post(this.urlApi, this.editedItem);
+      const request = await Axios.post(
+        this.entryPointApi + this.urlApi,
+        this.editedItem
+      );
       return request;
     },
 
     checkPassword() {
-      console.log(this.$store.getters.IS_ADMIN);
+      if (!this.isCheckPass) return true;
       if (this.$store.getters.IS_ADMIN) return true;
 
       this.dialogCheckPassword = true;
