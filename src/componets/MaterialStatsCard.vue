@@ -5,15 +5,18 @@
     v-bind="$attrs"
     v-on="$listeners"
   >
-    <template v-slot:after-heading>
+    <template #after-heading>
       <div class="ml-auto text-right">
         <div
           class="body-3 grey--text font-weight-light"
           v-text="title"
         />
 
-        <h3 class="display-2 font-weight-light text--primary">
-          {{ value }} <small>{{ smallValue }}</small>
+        <h3
+          style="line-height: 40%"
+          class="display-2 font-weight-light text--primary"
+        >
+          {{ value }} <small style="font-size: 1.5rem !important">{{ smallValue }}</small>
         </h3>
       </div>
     </template>
@@ -112,8 +115,5 @@
 
   .v-card__actions
     flex: 1 0 100%
-    
-h3 .display-2 small
-  font-size: 10px
     
 </style>
