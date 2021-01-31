@@ -56,7 +56,7 @@ export default {
   computed: {},
   watch: {},
   mounted() {
-    console.log(this.durations[0]);
+    // console.log(this.durations[0]);
     this.currentDuration = this.durations[0];
     // console.log(this.durations, this.currentDuration);
     this.update();
