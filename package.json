@@ -1,6 +1,6 @@
 {
   "name": "tlc-front-components",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "data table vuetify CRUD ",
   "author": "Oleg Kravchuck",
   "scripts": {

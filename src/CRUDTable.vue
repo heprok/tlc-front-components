@@ -270,6 +270,7 @@ export default {
     },
     query: {
       type: Object,
+      default: () => {}
     },
   },
 

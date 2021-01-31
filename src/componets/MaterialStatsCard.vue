@@ -12,7 +12,7 @@
           v-text="title"
         />
 
-        <h3 class="display-1 font-weight-light text--primary">
+        <h3 class="display-2 font-weight-light text--primary">
           {{ value }} <small>{{ smallValue }}</small>
         </h3>
       </div>
@@ -99,6 +99,7 @@
 
   .v-card
     border-radius: 4px
+    font-size: 10px
     flex: 0 1 auto
 
   .v-card__text
@@ -111,4 +112,8 @@
 
   .v-card__actions
     flex: 1 0 100%
+    
+h3 .display-2 small
+  font-size: 10px
+    
 </style>
