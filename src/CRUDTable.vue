@@ -391,14 +391,12 @@ export default {
     },
 
     async deleteItem() {
-      const request = await Axios.delete(
-        this.entryPointApi + this.editedItem["@id"]
+      const request = await Axios.delete(this.editedItem["@id"]
       );
       return request;
     },
     async editItem() {
-      const request = await Axios.put(
-        this.entryPointApi + this.editedItem["@id"],
+      const request = await Axios.put( this.editedItem["@id"],
         this.editedItem
       );
       return request;
