@@ -57,7 +57,7 @@ export default {
   watch: {},
   mounted() {
     // console.log(this.durations[0]);
-    let index = this.$store.getters.durationCard(document.location.hash + this.title) || 0;
+    let index = this.$store.state.durationCard[document.location.hash + this.title] || 0;
     this.currentDuration = this.durations[index];
     // console.log(this.durations, this.currentDuration);
     this.update();
@@ -86,7 +86,7 @@ export default {
       if(this.loading) return;
       if(this.durations.length == 1) return;
       this.currentDuration = this.durations[this.durations.indexOf(this.currentDuration) + 1] || this.durations[0];
-      this.$store.commit('setDuration', {index: this.durations.indexOf(this.currentDuration), nameCard: document.location.hash + this.title});
+      this.$store.commit('SET_DURATION', {index: this.durations.indexOf(this.currentDuration), nameCard: document.location.hash + this.title});
       this.update();
     },
   },

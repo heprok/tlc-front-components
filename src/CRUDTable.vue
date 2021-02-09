@@ -421,7 +421,7 @@ export default {
     },
 
     checkPassword() {
-      if (!this.isCheckPass) return true;
+      console.log(this.$store.getters.IS_ADMIN)
       if (this.$store.getters.IS_ADMIN) return true;
 
       this.dialogCheckPassword = true;
