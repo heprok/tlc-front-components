@@ -38,10 +38,7 @@
                     persistent
                     width="500"
                   >
-                    <base-material-card
-                      icon="mdi-key"
-                      title="Потвердите права"
-                    >
+                    <base-material-card icon="mdi-key" title="Потвердите права">
                       <v-card-title />
                       <v-card-text>
                         <v-row align-content="center">
@@ -77,15 +74,8 @@
                       </v-card-actions>
                     </base-material-card>
                   </v-dialog>
-                  <v-divider
-                    class="mx-1"
-                    inset
-                    vertical
-                  />
-                  <v-dialog
-                    v-model="dialogAdded"
-                    max-width="700px"
-                  >
+                  <v-divider class="mx-1" inset vertical />
+                  <v-dialog v-model="dialogAdded" max-width="700px">
                     <template #activator="{ on, attrs }">
                       <v-btn
                         color="primary"
@@ -121,11 +111,9 @@
                               />
                               <div v-else-if="header.type == 'select'">
                                 <v-select
-                                  v-model="selectModel"
-                                  :items="selectUrl(header.selectUrl)"
-                                  attach
-                                  chips
-                                  multiple
+                                  v-model="editedItem[header.itemSelect]"
+                                  :items="itemsSelect[header.itemSelect]"
+                                  :multiple="header.multiple"
                                 />
                               </div>
                             </v-col>
@@ -153,10 +141,7 @@
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
-                  <v-dialog
-                    v-model="dialogDelete"
-                    max-width="500px"
-                  >
+                  <v-dialog v-model="dialogDelete" max-width="500px">
                     <v-card>
                       <v-card-title class="headline">
                         Вы уверены, что хотите удалить?
@@ -198,41 +183,20 @@
           </v-card-title>
         </v-toolbar>
       </template>
-      <!-- CHECKBOX для boolean for fir and enabled -->
-      <template #[`item.fir`]="{ item }">
-        <v-simple-checkbox
-          v-model="item.fir"
-          disabled
-        />
-      </template>
-      <template #[`item.enabled`]="{ item }">
-        <v-simple-checkbox
-          v-model="item.enabled"
-          disabled
-        />
+      <template
+        v-for="slotName in Object.keys($scopedSlots)"
+        #[slotName]="slotScope"
+      >
+        <slot :name="slotName" v-bind="slotScope" />
       </template>
       <template #[`item.actions`]="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItemAction(item)"
-        >
+        <v-icon small class="mr-2" @click="editItemAction(item)">
           mdi-pencil
         </v-icon>
-        <v-icon
-          small
-          @click="deleteItemAction(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <v-icon small @click="deleteItemAction(item)"> mdi-delete </v-icon>
       </template>
       <template #no-data>
-        <v-btn
-          color="primary"
-          @click="update"
-        >
-          Обновить
-        </v-btn>
+        <v-btn color="primary" @click="update"> Обновить </v-btn>
       </template>
     </v-data-table>
   </base-material-card>
@@ -254,6 +218,13 @@ export default {
       type: String,
       required: true,
     },
+    itemsSelect: {
+      type: Object,
+      required: false,
+      default: () => {
+        return {};
+      },
+    },
     title: {
       type: String,
       default: "",
@@ -270,11 +241,11 @@ export default {
     },
     isCheckPass: {
       type: Boolean,
-      default: false
+      default: false,
     },
     query: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
   },
 
@@ -301,6 +272,12 @@ export default {
     },
   },
   watch: {
+    editedItem(value) {
+      // for (let key in value) {
+      // console.log(value[key] === Object(value[key]), value[key]);
+      // if (this.editedItem[key] === Object(this.editedItem[key])) this.editedItem[key] = value[key]["@id"];
+      // }
+    },
     dialogAdded(val) {
       val || this.closeAddedDialog();
     },
@@ -312,16 +289,6 @@ export default {
     this.update();
   },
   methods: {
-    selectUrl(url) {
-      let items = [];
-      Axios.get(this.entryPointApi + url).then(function (response) {
-        this.selectModel = response.data["hydra:member"].map(function (item) {
-          return item.name;
-        });
-        console.log(items);
-        return items;
-      });
-    },
     async update() {
       this.loading = true;
       this.loadingBtn = true;
@@ -353,7 +320,6 @@ export default {
         this.closeDeleteDialog();
       }
     },
-
     closeAddedDialog() {
       this.dialogAdded = false;
       this.$nextTick(() => {
@@ -391,23 +357,39 @@ export default {
     },
 
     async deleteItem() {
-      const request = await Axios.delete(this.editedItem["@id"]
-      );
+      const request = await Axios.delete(this.editedItem["@id"]);
       return request;
     },
     async editItem() {
-      const request = await Axios.put( this.editedItem["@id"],
-        this.editedItem
-      );
+      const request = await Axios.put(this.editedItem["@id"], this.editedItem);
       return request;
     },
     async updateItems() {
       this.items = [];
+      // let items;
       const config = {
         params: this.query,
       };
       const request = await Axios.get(this.entryPointApi + this.urlApi, config);
       this.items = request.data["hydra:member"];
+
+    // items.forEach((item, i, arr )=> {
+    //   console.log(item, item === Object(item));
+    //   for (let key in item) {
+    //       if (item[key] === Object(item[key]))
+    //         item[key] = item[key]["@id"];
+    //   }
+    //     // if( item === Object(item))
+    //       // items[i] = item['@id'];
+    //   });
+    //   //   console.log(items[key] === Object(items[key]), items[key]);
+    //   // }
+    //   this.items = items;
+      // for( let select in this.itemsSelect) {
+      //   this.items.foreach(item => {
+      //     item[select] = item[select]['@id'];
+      //   })
+      // }
       return request;
     },
     async addItem() {
@@ -419,7 +401,7 @@ export default {
     },
 
     checkPassword() {
-      console.log(this.$store.getters.IS_ADMIN)
+      console.log(this.$store.getters.IS_ADMIN);
       if (this.$store.getters.IS_ADMIN) return true;
 
       this.dialogCheckPassword = true;
