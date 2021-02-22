@@ -38,7 +38,10 @@
                     persistent
                     width="500"
                   >
-                    <base-material-card icon="mdi-key" title="Потвердите права">
+                    <base-material-card
+                      icon="mdi-key"
+                      title="Потвердите права"
+                    >
                       <v-card-title />
                       <v-card-text>
                         <v-row align-content="center">
@@ -74,8 +77,15 @@
                       </v-card-actions>
                     </base-material-card>
                   </v-dialog>
-                  <v-divider class="mx-1" inset vertical />
-                  <v-dialog v-model="dialogAdded" max-width="700px">
+                  <v-divider
+                    class="mx-1"
+                    inset
+                    vertical
+                  />
+                  <v-dialog
+                    v-model="dialogAdded"
+                    max-width="700px"
+                  >
                     <template #activator="{ on, attrs }">
                       <v-btn
                         color="primary"
@@ -141,7 +151,10 @@
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
-                  <v-dialog v-model="dialogDelete" max-width="500px">
+                  <v-dialog
+                    v-model="dialogDelete"
+                    max-width="500px"
+                  >
                     <v-card>
                       <v-card-title class="headline">
                         Вы уверены, что хотите удалить?
@@ -187,16 +200,33 @@
         v-for="slotName in Object.keys($scopedSlots)"
         #[slotName]="slotScope"
       >
-        <slot :name="slotName" v-bind="slotScope" />
+        <slot
+          :name="slotName"
+          v-bind="slotScope"
+        />
       </template>
       <template #[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="editItemAction(item)">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItemAction(item)"
+        >
           mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItemAction(item)"> mdi-delete </v-icon>
+        <v-icon
+          small
+          @click="deleteItemAction(item)"
+        >
+          mdi-delete
+        </v-icon>
       </template>
       <template #no-data>
-        <v-btn color="primary" @click="update"> Обновить </v-btn>
+        <v-btn
+          color="primary"
+          @click="update"
+        >
+          Обновить
+        </v-btn>
       </template>
     </v-data-table>
   </base-material-card>
@@ -272,12 +302,20 @@ export default {
     },
   },
   watch: {
-    editedItem(value) {
-      // for (let key in value) {
-      // console.log(value[key] === Object(value[key]), value[key]);
-      // if (this.editedItem[key] === Object(this.editedItem[key])) this.editedItem[key] = value[key]["@id"];
-      // }
-    },
+    // editedItem: {
+    //   handler(value) {
+    //     for (let key in value) {
+    //       let editedItem = {key: []};
+    //       if (this.editedItem[key] === Object(this.editedItem[key])){
+    //         console.log(this.editedItem[key])
+    //         // console.log(value, key);
+    //         // this.editedItem[key] = value[key]["@id"];
+
+    //       }
+    //     }
+    //   },
+    //   deep: true,
+    // },
     dialogAdded(val) {
       val || this.closeAddedDialog();
     },
@@ -301,6 +339,13 @@ export default {
       this.loadingBtn = false;
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
+      for (let key in this.itemsSelect){
+        if(Array.isArray(item[key]))
+          item[key].forEach((item) => this.editedItem[key].push(item["@id"]));
+        else
+          this.editedItem[key] = item[key]['@id'];
+          // console.log(this.editedItem[key])
+      }
       this.dialogAdded = true;
     },
 
@@ -373,18 +418,18 @@ export default {
       const request = await Axios.get(this.entryPointApi + this.urlApi, config);
       this.items = request.data["hydra:member"];
 
-    // items.forEach((item, i, arr )=> {
-    //   console.log(item, item === Object(item));
-    //   for (let key in item) {
-    //       if (item[key] === Object(item[key]))
-    //         item[key] = item[key]["@id"];
-    //   }
-    //     // if( item === Object(item))
-    //       // items[i] = item['@id'];
-    //   });
-    //   //   console.log(items[key] === Object(items[key]), items[key]);
-    //   // }
-    //   this.items = items;
+      // items.forEach((item, i, arr )=> {
+      //   console.log(item, item === Object(item));
+      //   for (let key in item) {
+      //       if (item[key] === Object(item[key]))
+      //         item[key] = item[key]["@id"];
+      //   }
+      //     // if( item === Object(item))
+      //       // items[i] = item['@id'];
+      //   });
+      //   //   console.log(items[key] === Object(items[key]), items[key]);
+      //   // }
+      //   this.items = items;
       // for( let select in this.itemsSelect) {
       //   this.items.foreach(item => {
       //     item[select] = item[select]['@id'];
@@ -401,15 +446,25 @@ export default {
     },
 
     checkPassword() {
-      console.log(this.$store.getters.IS_ADMIN);
       if (this.$store.getters.IS_ADMIN) return true;
 
       this.dialogCheckPassword = true;
+    },
+    removeObjectInSelect() {
+      for (let key in this.editedItem) {
+        // console.log(this.editedItem[key] === Object(this.editedItem[key]), this.editedItem[key] );
+        if (this.editedItem[key] === Object(this.editedItem[key])) {
+          this.editedItem[key] = this.editedItem[key].filter((item) => {
+            return item !== Object(item);
+          });
+        }
+      }
     },
     async save() {
       this.loadingBtn = true;
       if (this.checkPassword()) {
         if (this.editedIndex > -1) {
+          this.removeObjectInSelect();
           Object.assign(this.items[this.editedIndex], this.editedItem);
           await this.editItem();
         } else {
