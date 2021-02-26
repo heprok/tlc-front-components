@@ -7,7 +7,7 @@
         v-bind="$attrs"
         :elevation="durations.length == 1 ? 2 : (hover ? 16 : 2)"
         :small-value="value"
-        :sub-text="subtitle"
+        :sub-text="subTitle"
         :title="title + ' ' + currentDuration.title"
         :color="color"
         v-on="$listeners"
@@ -39,21 +39,29 @@ export default {
       type: String,
       default: "",
     },
+    subText: {
+      type: String,
+      default: null
+    }
   },
   data() {
     return {
       value: "",
       entryPointApi: "",
-      subtitle: "",
       loading: false,
       color: "",
+      currentSubTitle: "",
       currentDuration: {
         title: "",
         url: ""
       }
     };
   },
-  computed: {},
+  computed: {
+    subTitle() {
+      return this.subText === null ? this.currentSubTitle : this.subText;
+    }
+  },
   watch: {},
   mounted() {
     // console.log(this.durations[0]);
@@ -71,7 +79,7 @@ export default {
         request = await Axios.get(this.entryPointApi + this.urlApi + this.currentDuration.url);
         let data = request.data;
         this.value = data.value;
-        this.subtitle = data.subtitle;
+        this.currentSubTitle = data.subtitle;
         this.color = data.color;
       } catch (err) {
         let data = err.response.data;
