@@ -48,7 +48,9 @@
                           <v-text-field
                             v-model="password"
                             label="Пароль"
-                            type="password"
+                            :type="showPass ? 'text' : 'password'"
+                            :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="showPass = !showPass"
                           />
                         </v-row>
                       </v-card-text>
@@ -290,6 +292,7 @@ export default {
       editedItem: {},
       selectModel: [],
       defaultItem: {},
+      showPass: false,
       loadingBtn: false,
       dialogCheckPassword: false,
       password: "",
