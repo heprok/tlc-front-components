@@ -38,10 +38,7 @@
                     persistent
                     width="500"
                   >
-                    <base-material-card
-                      icon="mdi-key"
-                      title="Потвердите права"
-                    >
+                    <base-material-card icon="mdi-key" title="Потвердите права">
                       <v-card-title />
                       <v-card-text>
                         <v-row align-content="center">
@@ -79,15 +76,8 @@
                       </v-card-actions>
                     </base-material-card>
                   </v-dialog>
-                  <v-divider
-                    class="mx-1"
-                    inset
-                    vertical
-                  />
-                  <v-dialog
-                    v-model="dialogAdded"
-                    max-width="700px"
-                  >
+                  <v-divider class="mx-1" inset vertical />
+                  <v-dialog v-model="dialogAdded" max-width="700px">
                     <template #activator="{ on, attrs }">
                       <v-btn
                         color="primary"
@@ -128,6 +118,13 @@
                                   :multiple="header.multiple"
                                 />
                               </div>
+                              <div v-else-if="header.type == 'time'">
+                                <v-time-picker
+                                  v-model="editedItem[header.value]"
+                                  format="24hr"
+                                  scrollable
+                                />
+                              </div>
                             </v-col>
                           </v-row>
                         </v-container>
@@ -153,10 +150,7 @@
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
-                  <v-dialog
-                    v-model="dialogDelete"
-                    max-width="500px"
-                  >
+                  <v-dialog v-model="dialogDelete" max-width="500px">
                     <v-card>
                       <v-card-title class="headline">
                         Вы уверены, что хотите удалить?
@@ -202,33 +196,16 @@
         v-for="slotName in Object.keys($scopedSlots)"
         #[slotName]="slotScope"
       >
-        <slot
-          :name="slotName"
-          v-bind="slotScope"
-        />
+        <slot :name="slotName" v-bind="slotScope" />
       </template>
       <template #[`item.actions`]="{ item }">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItemAction(item)"
-        >
+        <v-icon small class="mr-2" @click="editItemAction(item)">
           mdi-pencil
         </v-icon>
-        <v-icon
-          small
-          @click="deleteItemAction(item)"
-        >
-          mdi-delete
-        </v-icon>
+        <v-icon small @click="deleteItemAction(item)"> mdi-delete </v-icon>
       </template>
       <template #no-data>
-        <v-btn
-          color="primary"
-          @click="update"
-        >
-          Обновить
-        </v-btn>
+        <v-btn color="primary" @click="update"> Обновить </v-btn>
       </template>
     </v-data-table>
   </base-material-card>
@@ -342,12 +319,11 @@ export default {
       this.loadingBtn = false;
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      for (let key in this.itemsSelect){
-        if(Array.isArray(item[key]))
+      for (let key in this.itemsSelect) {
+        if (Array.isArray(item[key]))
           item[key].forEach((item) => this.editedItem[key].push(item["@id"]));
-        else
-          this.editedItem[key] = item[key]['@id'];
-          // console.log(this.editedItem[key])
+        else this.editedItem[key] = item[key]["@id"];
+        // console.log(this.editedItem[key])
       }
       this.dialogAdded = true;
     },
