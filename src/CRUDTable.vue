@@ -124,6 +124,12 @@
                                   format="24hr"
                                   scrollable
                                 />
+                              </div>                              
+                              <div v-else-if="header.type == 'bool'">
+                                <v-simple-checkbox
+                                  v-model="editedItem[header.value]"
+                                  label="`header.text`"
+                                /> {{header.text}}
                               </div>
                             </v-col>
                           </v-row>
