@@ -1,5 +1,7 @@
 <template>
-  <div id="loader-wrapper">
+  <div
+    id="loader-wrapper"
+  >
     <div id="loader" />
     <div id="loader2" />
     <div id="loader3" />
@@ -7,30 +9,16 @@
 </template>
 
 <script>
-// import image1 from "./assets/images/loader/1.png";
-// import image2 from "./assets/images/loader/2.png";
-// import image3 from "./assets/images/loader/3.png";
 export default {
   name: "LoaderTlc",
+  props: {
+  },
   data() {
-    return {
-      loading: true,
-      image1: image1,
-      image2: image2,
-      image3: image3,
-    };
+    return {};
   },
   computed: {
     spinnerStyle() {
-      return {
-        // height: this.size,
-        // width: this.size,
-        // borderWidth: "2px",
-        // borderStyle: "solid",
-        // borderColor: this.color + " " + this.color + " transparent",
-        // borderRadius: this.radius,
-        // background: "transparent",
-      };
+      return {};
     },
   },
   mounted() {},
@@ -87,7 +75,6 @@ export default {
   -webkit-animation: spin 5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
   animation: spin 5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
-
 
 @-webkit-keyframes spin {
   0% {
