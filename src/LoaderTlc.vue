@@ -44,7 +44,7 @@ export default {
   width: 150px;
   height: 150px;
   margin: -75px 0 0 -75px;
-  opacity: 50%;
+  opacity: .5;
   -webkit-animation: spinccw 2.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
   animation: spinccw 2.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
@@ -57,7 +57,7 @@ export default {
   width: 150px;
   height: 150px;
   margin: -150px 0 0 -75px;
-  opacity: 90%;
+  opacity: .9;
   -webkit-animation: spinccw 5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
   animation: spinccw 5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
@@ -71,7 +71,7 @@ export default {
   width: 150px;
   height: 150px;
   margin: -150px 0 0 -75px;
-  opacity: 90%;
+  opacity: .9;
   -webkit-animation: spin 5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
   animation: spin 5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
