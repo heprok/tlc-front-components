@@ -220,9 +220,9 @@
 <script>
 import Axios from "axios";
 import crypto from "crypto";
-import BaseMaterialCard from "./componets/MaterialCard";
+import BaseMaterialCard from "../componets/MaterialCard";
 export default {
-  name: "CRUDTable",
+  name: "TlcFrontComponentsCrudTable",
   compontens: { BaseMaterialCard },
   props: {
     headers: {
