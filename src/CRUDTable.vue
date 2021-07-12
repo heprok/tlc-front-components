@@ -219,10 +219,9 @@
 
 <script>
 import Axios from "axios";
-import crypto from "crypto";
-import BaseMaterialCard from "../componets/MaterialCard";
+import BaseMaterialCard from "./componets/MaterialCard";
 export default {
-  name: "TlcFrontComponentsCrudTable",
+  name: "CRUDTable",
   compontens: { BaseMaterialCard },
   props: {
     headers: {
@@ -366,8 +365,7 @@ export default {
       if (
         // TODO удалить
         // tls-pass
-        crypto.createHash("sha512").update(this.password).digest("hex") ==
-        "396d55a413d2c368e78ecefd2e818a79b09236e067ddb649a6cd24d85e3a25585bdb2f787c20a78e7b0ec8fc0ba348fc65a2fe85f674eaa67de678c6f8ade11d"
+        this.password == 'tlc-pass'
       ) {
         this.$store.commit("SET_ADMIN", true);
         this.closeDialogCheckPassword();
@@ -396,7 +394,6 @@ export default {
     },
     async updateItems() {
       this.items = [];
-      // let items;
       const config = {
         params: this.query,
       };
